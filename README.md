@@ -12,5 +12,5 @@ You have to create PayPal REST sandbox credentials and copy/move config/Config.p
 
 ## Attention
 
-the approval window will not close automatically, because the return_url is missing in the payload/payment_source/experience_context! Close the tab or window manually and go back to the checkout-window.
+the approval window will not close automatically, because the return_url is missing in the payload/payment_source/experience_context! After the approval, close the tab or window manually and go back to the checkout-window.
 
