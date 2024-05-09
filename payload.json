@@ -3,7 +3,7 @@
 	"payment_source" : {
 		"paypal" : {
 			"experience_context" : {
-				"brand_name" : "test"
+				"landing_page" : "LOGIN"
 			}
 		}
 	},
