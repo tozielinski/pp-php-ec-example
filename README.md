@@ -2,7 +2,7 @@
 
 [![Project status: active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Project tags](https://img.shields.io/github/v/tag/tozielinski/pp-php-ec-example?logo=github)](https://github.com/tozielinski/pp-php-ec-example/tags)
-[![Project contributors](https://img.shields.io/github/contributors/tozielinski/pp-php-ec-example?logo=github)](https://github.com/tozielinski/pp-php-ec-example/graphs/contributors)
+<!-- [![Project contributors](https://img.shields.io/github/contributors/tozielinski/pp-php-ec-example?logo=github)](https://github.com/tozielinski/pp-php-ec-example/graphs/contributors) -->
 [![Project license](https://img.shields.io/github/license/tozielinski/pp-php-ec-example?logo=github)](https://github.com/tozielinski/pp-php-ec-example/LICENSE)
 <!-- [![Project build Status](https://badges.netlify.com/api/docsydocs.svg?branch=main)](https://app.netlify.com/sites/docsydocs/deploys) -->
 
