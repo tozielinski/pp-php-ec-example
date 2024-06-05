@@ -33,26 +33,28 @@ $payload = file_get_contents("payload.json");
 	<div id="response-container"></div>
 	<script>
 		$(document).ready(function () {
+			function writeResponse (containerTitle, summaryTitle, content) {
+				const container = document.getElementById(containerTitle);
+				const details = document.createElement("details");
+				const summary = document.createElement("summary");
+				summary.innerHTML = summaryTitle;
+				const pre = document.createElement("pre");
+				pre.innerHTML = '<p>'+JSON.stringify(content, null, 2)+'</p>';
+				const hr = document.createElement("hr");
+				container.appendChild(details);
+				details.appendChild(summary);
+				details.appendChild(pre);
+				container.appendChild(hr);
+			}
+
 			let orderId = "";
-			const container = document.getElementById("response-container");
-			const payloadContainer = document.getElementById("payload-container");
 
 			$('#createOrderForm').submit(function (event) {
 				event.preventDefault();
 				// var form = document.getElementById('createOrderForm'); 
 				var formData = new FormData();
 				formData.append("payload", JSON.stringify(<?= $payload ?>));
-				
-				const details = document.createElement("details");
-				const summary = document.createElement("summary");
-				summary.innerHTML = 'Payload';
-				const pre = document.createElement("pre");
-				pre.innerHTML = '<p>'+JSON.stringify(<?= $payload ?>, null, 2)+'</p>';
-				const hr = document.createElement("hr");
-				payloadContainer.appendChild(details);
-				details.appendChild(summary);
-				details.appendChild(pre);
-				payloadContainer.appendChild(hr);
+				writeResponse("payload-container", "Payload", <?= $payload ?>);
 
 				$.ajax({
 					// url: <?= $rootPath.URL['services']['orderCreate'] ?>,
@@ -62,25 +64,23 @@ $payload = file_get_contents("payload.json");
 					processData: false,
 					contentType: false,
 					success: function(response) {
-						orderId = response.response.id;
-						$('#approvalOrderForm').attr('action', response.response.links[1].href);
-						$('#createOrderInput').attr('disabled', true);
-						$('#approvalOrderInput').attr('disabled', false);
-						$('#getOrderInput').attr('disabled', false);
-						const details = document.createElement("details");
-						const summary = document.createElement("summary");
-						summary.innerHTML = 'Create Order Response';
-						const pre = document.createElement("pre");
-						pre.innerHTML = '<p>'+JSON.stringify(response.response, null, 2)+'</p>';
-						const hr = document.createElement("hr");
-						container.appendChild(details);
-						details.appendChild(summary);
-						details.appendChild(pre);
-						container.appendChild(hr);
-						console.log(response);
+						const errorDetail = response.response?.details?.[0];
+						orderId = response.response?.id;
+						if (orderId) {
+							$('#approvalOrderForm').attr('action', response.response.links[1].href);
+							$('#createOrderInput').attr('disabled', true);
+							$('#approvalOrderInput').attr('disabled', false);
+							$('#getOrderInput').attr('disabled', false);
+							writeResponse("response-container", "Create Order Response", response.response);
+							console.log(response);
+						} else {
+							writeResponse("response-container", "ERROR", "Sorry, your create order could not be processed. <br>"+errorDetail?.description+"<br/>"+response.response?.debug_id);
+							console.error(response);
+						}
 					},
 					error: function(xhr, textStatus, error){
-						alert('Your form was not sent successfully.'); 
+						alert('Your form was not sent successfully.');
+						writeResponse("response-container", "ERROR", error);
 						console.error(error); 
 					}
 				});
@@ -96,21 +96,20 @@ $payload = file_get_contents("payload.json");
 					url: 'api/getOrderDetails.php?id='+orderId,
 					method: 'GET',
 					success: function(response) {
-						console.log(response);
-						const details = document.createElement("details");
-						const summary = document.createElement("summary");
-						summary.innerHTML = 'Get Order Detail Response';
-						const pre = document.createElement("pre");
-						pre.innerHTML = '<p>'+JSON.stringify(response.response, null, 2)+'</p>';
-						const hr = document.createElement("hr");
-						container.appendChild(details);
-						details.appendChild(summary);
-						details.appendChild(pre);
-						container.appendChild(hr);
-						console.log(response);
+						const errorDetail = response.response?.details?.[0];
+						const responseId = response.response?.id;
+						if (responseId === orderId) {
+							writeResponse("response-container", "Get Order Detail Response", response.response);
+							console.log(response);
+						} else {
+							writeResponse("response-container", "ERROR", "Sorry, your get order-details could not be processed. <br>"+errorDetail?.description+"<br/>"+response.response?.debug_id);
+							console.error(response);
+						}
+						
 					},
 					error: function(xhr, textStatus, error){
-						alert('Your form was not sent successfully.'); 
+						alert('Your form was not sent successfully.');
+						writeResponse("response-container", "ERROR", error);
 						console.error(error); 
 					}
 				});
@@ -122,21 +121,20 @@ $payload = file_get_contents("payload.json");
 					url: 'api/capturePaymentForOrder.php?id='+orderId,
 					method: 'GET',
 					success: function(response) {
-						console.log(response);
-						const details = document.createElement("details");
-						const summary = document.createElement("summary");
-						summary.innerHTML = 'Capture Payment For Order Response';
-						const pre = document.createElement("pre");
-						pre.innerHTML = '<p>'+JSON.stringify(response.response, null, 2)+'</p>';
-						const hr = document.createElement("hr");
-						container.appendChild(details);
-						details.appendChild(summary);
-						details.appendChild(pre);
-						container.appendChild(hr);
-						console.log(response);
+						const errorDetail = response.response?.details?.[0];
+						const transaction = response.response?.purchase_units?.[0]?.payments?.captures?.[0] ||
+							response.response?.purchase_units?.[0]?.payments?.authorizations?.[0];
+						if (transaction?.status === "COMPLETED" || transaction?.status === "CREATED") {
+							writeResponse("response-container", "Capture Payment For Order Response", response.response);
+							console.log(response);
+						} else {
+							writeResponse("response-container", "ERROR", "Sorry, your capture payment for order could not be processed. <br>"+errorDetail?.description+"<br/>"+response.response?.debug_id);
+							console.error(response);
+						}
 					},
 					error: function(xhr, textStatus, error){
-						alert('Your form was not sent successfully.'); 
+						alert('Your form was not sent successfully.');
+						writeResponse("response-container", "ERROR", error);
 						console.error(error); 
 					}
 				});
