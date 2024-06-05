@@ -26,4 +26,4 @@ Now you must add your credentials in Config.php.
 
 ## License
 
-This project is licensed under the MIT license - see the [LICENSE.md](https://github.com/tozielinski/pp-php-ec-example/blob/main/LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/tozielinski/pp-php-ec-example/blob/main/LICENSE) file for details.
