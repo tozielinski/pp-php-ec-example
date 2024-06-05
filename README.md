@@ -8,7 +8,7 @@
 
 ## Usage
 
-You have to create PayPal REST sandbox credentials and copy/move config/Config.php.sav to config/Config.php. Insert the credentials into config/Config.php as client_id and client_secret for the correct environment.
+You have to create PayPal REST sandbox credentials and copy/move api/config/Config.php.sav to api/config/Config.php. Insert the credentials into api/config/Config.php as client_id and client_secret for the correct environment.
 
 ## Attention
 
