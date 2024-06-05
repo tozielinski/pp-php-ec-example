@@ -16,7 +16,7 @@ The approval window will not close automatically, because the return_url is miss
 
 ## Documentation
 
-A running LAMP environment is necessarry. Clone the git to the root folder of that installation.
+A running LAMP environment is necessary. Clone the git to the root folder of that installation.
 ```sh
 git clone https://github.com/tozielinski/pp-php-ec-example.git
 cd pp-php-ec-example/api/config
