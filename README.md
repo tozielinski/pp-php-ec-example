@@ -12,5 +12,18 @@ You have to create PayPal REST sandbox credentials and copy/move config/Config.p
 
 ## Attention
 
-the approval window will not close automatically, because the return_url is missing in the payload/payment_source/experience_context! After the approval, close the tab or window manually and go back to the checkout-window.
+The approval window will not close automatically, because the return_url is missing in the payload/payment_source/experience_context! After the approval, close the tab or window manually and go back to the checkout-window.
 
+## Documentation
+
+A running LAMP environment is necessarry. Clone the git to the root folder of that installation.
+```sh
+git clone https://github.com/tozielinski/pp-php-ec-example.git
+cd pp-php-ec-example/api/config
+cp Config.php.sav Config.php
+```
+Now you must add your credentials in Config.php.
+
+## License
+
+This project is licensed under the MIT license - see the [LICENSE.md](https://github.com/tozielinski/pp-php-ec-example/LICENSE) file for details.
